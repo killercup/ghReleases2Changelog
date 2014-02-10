@@ -1,6 +1,6 @@
 # Github Releases to Changelog File
 
-This reads releases from Gtihub and writes the descriptions to a changelog file.
+This reads releases from Github and writes the descriptions to a changelog file. (See `Changelog.md` for format.)
 
 ## Install
 
