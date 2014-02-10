@@ -1,0 +1,48 @@
+{
+  "name": "ghReleases2Changelog",
+  "version": "0.1.0",
+  "description": "Write release notes from github to local changelog file",
+  "bin": {
+    "releases2changelog": "./bin/releases2changelog"
+  },
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha -R spec",
+    "docs": "grock",
+    "publish_docs": "grock --github"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/killercup/ghReleases2Changelog"
+  },
+  "keywords": [
+    "changelog",
+    "dev",
+    "github",
+    "cli"
+  ],
+  "author": {
+    "name": "Pascal Hertleif",
+    "email": "killercup@gmail.com",
+    "url": "https://github.com/killercup"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/killercup/ghReleases2Changelog/blob/master/LICENSE"
+    }
+  ],
+  "bugs": {
+    "url": "https://github.com/killercup/ghReleases2Changelog/issues"
+  },
+  "homepage": "https://github.com/killercup/ghReleases2Changelog",
+  "dependencies": {
+    "optimist": "~0.6.1",
+    "request": "~2.33.0"
+  },
+  "devDependencies": {
+    "chai": "~1.9.0",
+    "mocha": "~1.17.1",
+    "grock": "~0.2.6"
+  }
+}

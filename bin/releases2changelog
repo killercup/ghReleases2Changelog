@@ -1,0 +1,76 @@
+#!/usr/bin/env node
+/**
+ * # Github Releases to Changelog File
+ */
+'use strict';
+
+/**
+ * ## CLI
+ */
+var optimist = require('optimist')
+  .string('repo')
+  .describe('repo', "The github repository, e.g. 'killercup/grock'.")
+
+  .string('out')
+  .describe('out', "The file to write to")
+  .default('out', "Changelog.md")
+
+  .boolean('help')
+  .describe('help', 'Show this message')
+  .alias('h', 'help')
+
+  .boolean('version')
+  .describe('version', 'Show version')
+  .alias('V', 'version')
+;
+
+/**
+ * ### Display Help
+ */
+if (optimist.argv.help) {
+  optimist.showHelp();
+  return process.exit(2);
+}
+
+/**
+ * ### Display Version
+ */
+if (optimist.argv.version) {
+  var fs = require('fs');
+  var pkg = JSON.parse(fs.readFileSync(__dirname+"/../package.json"));
+  console.log("Version", pkg.version);
+  return process.exit(0);
+}
+
+/**
+ * ## Request
+ */
+
+optimist.demand('repo');
+
+var request = require('request');
+var convert = require('../lib/convert');
+
+var options = {
+  url: "https://api.github.com/repos/"+optimist.argv.repo+"/releases",
+  headers: {
+    'User-Agent': 'request'
+  }
+};
+
+request(options, function (error, response, body) {
+  if (error) { throw error; }
+  try {
+    var json = JSON.parse(body);
+  } catch (e) {
+    throw e;
+    console.log("body", body);
+  }
+  convert(json, optimist.argv.out)
+  .on('error', function (e) {
+    console.log("Error processing data.", e);
+  })
+  .on('finish', function () {
+    console.log("Done. Wrote to", optimist.argv.out);
+  });
+});
