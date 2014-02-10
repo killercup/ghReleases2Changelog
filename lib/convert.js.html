@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Convert Release.json to Changes.md - convert.js</title>
+
+  <link rel="stylesheet" href="../assets/style.css">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"/>
+  <meta name="groc-relative-root" content="../"/>
+  <meta name="groc-document-path" content="lib/convert.js"/>
+  
+  <meta name="groc-repository-url" content="https://github.com/killercup/ghReleases2Changelog"/>
+  
+</head>
+<body>
+  <div id="file-area">
+    <div id="meta">
+      <code class="file-path">
+      
+        <a href="https://github.com/killercup/ghReleases2Changelog/blob/master/lib/convert.js">lib/convert.js</a>
+      
+      </code>
+    </div>
+    <div id="document">
+    
+      <div class="segment">
+      
+        <div class="comments doc-section">
+          <div class="wrapper"><h1 id="convert-release-json-to-changes-md"><a href="#convert-release-json-to-changes-md" class="anchor"></a>Convert Release.json to Changes.md</h1><p>Parameters:</p>
+<ul>
+<li><strong><code>data</code> must be an Array.</strong><br/>(The releases from Github&#39;s API)</li>
+<li><strong><code>out</code> must be a String.</strong><br/>(Changelog filename)</li>
+</ul>
+<p><strong>Returns a Stream</strong><br/>(The file write stream)</p>
+</div>
+        </div>
+      
+      
+        <div class="code"><div class="wrapper"><span class="hljs-keyword">var</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">'fs'</span>);
+
+module.exports = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(data, out)</span> {</span>
+  <span class="hljs-keyword">var</span> output = fs.createWriteStream(out);
+
+  output.on(<span class="hljs-string">'open'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+    data.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(release)</span> {</span>
+      output.write(<span class="hljs-string">'# '</span>+ release.name + <span class="hljs-string">'\n\n'</span>);
+      output.write( (<span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>(release.published_at)).toDateString() + <span class="hljs-string">'\n\n'</span>);
+      output.write(release.body.replace(<span class="hljs-string">'\r\n'</span>, <span class="hljs-string">'\n'</span>) + <span class="hljs-string">'\n\n'</span>);
+    });
+    output.end();
+  });
+
+  <span class="hljs-keyword">return</span> output;
+};</div></div>
+      
+      </div>
+    
+    </div>
+  </div>
+
+  <script src="../toc.js"></script>
+  <script src="../assets/libs.js"></script>
+  <script src="../assets/behavior.js"></script>
+</body>
+</html>
