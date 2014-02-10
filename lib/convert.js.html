@@ -43,8 +43,9 @@ module.exports = <span class="hljs-function"><span class="hljs-keyword">function
   <span class="hljs-keyword">var</span> output = fs.createWriteStream(out);
 
   output.on(<span class="hljs-string">'open'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span>
+    output.write(<span class="hljs-string">'# Changelog'</span> + <span class="hljs-string">'\n\n'</span>);
     data.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(release)</span> {</span>
-      output.write(<span class="hljs-string">'# '</span>+ release.name + <span class="hljs-string">'\n\n'</span>);
+      output.write(<span class="hljs-string">'## '</span>+ release.name + <span class="hljs-string">'\n\n'</span>);
       output.write( (<span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>(release.published_at)).toDateString() + <span class="hljs-string">'\n\n'</span>);
       output.write(release.body.replace(<span class="hljs-string">'\r\n'</span>, <span class="hljs-string">'\n'</span>) + <span class="hljs-string">'\n\n'</span>);
     });
